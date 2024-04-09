@@ -18,7 +18,9 @@ use App\Http\Controllers\api\studentController;
 
 Route::get('/students', [studentController::class, 'index']);
 
-Route::get('/students/{id}', [studentController::class, 'show']);
+// Route::get('/students/{id}', [studentController::class, 'show']);
+
+Route::get('/students/{name}', [studentController::class, 'showName']);
 
 Route::post('/students', [studentController::class, 'store']);
 

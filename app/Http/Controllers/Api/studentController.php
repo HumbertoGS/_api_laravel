@@ -31,7 +31,6 @@ class studentController extends Controller
         return response()->json($data);
     }
 
-
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -66,6 +65,26 @@ class studentController extends Controller
                     'status' => 201
                 ];
             }
+        }
+
+        return response()->json($data);
+    }
+
+    public function showName($name)
+    {
+
+        $student = student::where('name', 'like', "$name%")->get();
+
+        if (!$student) {
+            $data = [
+                'message' => 'Estudiante no encontrado',
+                'status' => 200
+            ];
+        } else {
+            $data = [
+                'students' => $student[0],
+                'status' => 200
+            ];
         }
 
         return response()->json($data);
