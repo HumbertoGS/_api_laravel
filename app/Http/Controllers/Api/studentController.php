@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Mail\NotificationEmail;
 use App\Models\student;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
 class studentController extends Controller
@@ -72,7 +74,6 @@ class studentController extends Controller
 
     public function showName($name)
     {
-
         $student = student::where('name', 'like', "$name%")->get();
 
         if (!$student) {
@@ -223,6 +224,20 @@ class studentController extends Controller
                 ];
             }
         }
+
+        return response()->json($data);
+    }
+
+    public function sendData(Request $request)
+    {
+        $student = student::where('email', '=', "$request->email")->get();
+
+        Mail::to($student[0]->email)->send(new NotificationEmail($student[0]));
+
+        $data = [
+            'message' => 'Correo enviado',
+            'status' => 200
+        ];
 
         return response()->json($data);
     }
