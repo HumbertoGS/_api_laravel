@@ -29,3 +29,5 @@ Route::put('/students/{id}', [studentController::class, 'update']);
 Route::patch('/students/{id}', [studentController::class, 'updatePartial']);
 
 Route::delete('/students/{id}', [studentController::class, 'delete']);
+
+Route::post('/students/sendData', [studentController::class, 'sendData']);
