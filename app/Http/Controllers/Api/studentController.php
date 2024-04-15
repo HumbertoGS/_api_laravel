@@ -76,14 +76,15 @@ class studentController extends Controller
     {
         $student = student::where('name', 'like', "$name%")->get();
 
-        if (!$student) {
+        if ($student->isEmpty()) {
             $data = [
-                'message' => 'Estudiante no encontrado',
-                'status' => 200
+                'message' => 'Nombre ingresado no tiene datos guardados.',
+                'status' => 404
             ];
-        } else {
+        }
+        else {
             $data = [
-                'students' => $student[0],
+                'students' => $student->first(),
                 'status' => 200
             ];
         }
